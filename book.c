@@ -668,7 +668,7 @@ eb_load_catalog_epwing(EB_Book *book, const char *catalog_path)
 	 * We don't complain about unexpected EOF.  In that case, we
 	 * return EB_SUCCESS.
 	 */
-	ssize_t read_result = zio_read(&zio, buffer, EB_SIZE_EPWING_CATALOG);
+	size_t read_result = zio_read(&zio, buffer, EB_SIZE_EPWING_CATALOG);
 	if (read_result < 0) {
 	    error_code = EB_ERR_FAIL_READ_CAT;
 	    goto failed;

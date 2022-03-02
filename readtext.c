@@ -84,7 +84,7 @@ static pthread_mutex_t cache_mutex = PTHREAD_MUTEX_INITIALIZER;
  */
 static EB_Error_Code eb_read_text_internal(EB_Book *book,
     EB_Appendix *appendix, EB_Hookset *hookset, void *container,
-    size_t text_max_length, char *text, ssize_t *text_length,
+    size_t text_max_length, char *text, size_t *text_length,
     int forward_only);
 static int eb_is_stop_code(EB_Book *book, EB_Appendix *appendix,
     unsigned int code0, unsigned int code1);
@@ -287,7 +287,7 @@ eb_tell_text(EB_Book *book, EB_Position *position)
  */
 EB_Error_Code
 eb_read_text(EB_Book *book, EB_Appendix *appendix, EB_Hookset *hookset,
-    void *container, size_t text_max_length, char *text, ssize_t *text_length)
+    void *container, size_t text_max_length, char *text, size_t *text_length)
 {
     EB_Error_Code error_code;
     const EB_Hook *hook;
@@ -389,7 +389,7 @@ eb_read_text(EB_Book *book, EB_Appendix *appendix, EB_Hookset *hookset,
  */
 EB_Error_Code
 eb_read_heading(EB_Book *book, EB_Appendix *appendix, EB_Hookset *hookset,
-    void *container, size_t text_max_length, char *text, ssize_t *text_length)
+    void *container, size_t text_max_length, char *text, size_t *text_length)
 {
     EB_Error_Code error_code;
     const EB_Hook *hook;
@@ -477,7 +477,7 @@ eb_read_heading(EB_Book *book, EB_Appendix *appendix, EB_Hookset *hookset,
  */
 EB_Error_Code
 eb_read_rawtext(EB_Book *book, size_t text_max_length, char *text,
-    ssize_t *text_length)
+    size_t *text_length)
 {
     EB_Error_Code error_code;
 
@@ -551,7 +551,7 @@ eb_read_rawtext(EB_Book *book, size_t text_max_length, char *text,
 static EB_Error_Code
 eb_read_text_internal(EB_Book *book, EB_Appendix *appendix,
     EB_Hookset *hookset, void *container, size_t text_max_length, char *text,
-    ssize_t *text_length, int forward_only)
+    size_t *text_length, int forward_only)
 {
     EB_Error_Code error_code;
     EB_Text_Context *context;
@@ -637,7 +637,7 @@ text_max_length=%ld, forward=%d)",
 	 * buffer, and reads a next chunk from a file.
 	 */
 	if (cache_rest_length < SIZE_FEW_REST && !context->file_end_flag) {
-	    ssize_t read_result;
+	    size_t read_result;
 
 	    if (0 < cache_rest_length)
 		memmove(cache_buffer, cache_p, cache_rest_length);
@@ -2057,7 +2057,7 @@ eb_backward_text(EB_Book *book, EB_Appendix *appendix)
     off_t backward_location = -1;
     char text_buffer[EB_SIZE_PAGE];
     char *text_buffer_p;
-    ssize_t read_result;
+    size_t read_result;
     int stop_code0, stop_code1;
 
     eb_lock(&book->lock);

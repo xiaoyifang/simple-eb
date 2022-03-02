@@ -228,7 +228,7 @@ void zio_close(Zio *zio);
 int zio_file(Zio *zio);
 Zio_Code zio_mode(Zio *zio);
 off_t zio_lseek(Zio *zio, off_t offset, int whence);
-ssize_t zio_read(Zio *zio, char *buffer, size_t length);
+size_t zio_read(Zio *zio, char *buffer, size_t length);
 
 #ifdef __cplusplus
 }

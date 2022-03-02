@@ -144,12 +144,12 @@ EB_Error_Code eb_seek_text(EB_Book *book, const EB_Position *position);
 EB_Error_Code eb_tell_text(EB_Book *book, EB_Position *position);
 EB_Error_Code eb_read_text(EB_Book *book, EB_Appendix *appendix,
     EB_Hookset *hookset, void *container, size_t text_max_length, char *text,
-    ssize_t *text_length);
+    size_t *text_length);
 EB_Error_Code eb_read_heading(EB_Book *book, EB_Appendix *appendix,
     EB_Hookset *hookset, void *container, size_t text_max_length, char *text,
-    ssize_t *text_length);
+    size_t *text_length);
 EB_Error_Code eb_read_rawtext(EB_Book *book, size_t text_max_length,
-    char *text, ssize_t *text_length);
+    char *text, size_t *text_length);
 int eb_is_text_stopped(EB_Book *book);
 EB_Error_Code eb_write_text_byte1(EB_Book *book, int byte1);
 EB_Error_Code eb_write_text_byte2(EB_Book *book, int byte1, int byte2);

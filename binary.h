@@ -55,7 +55,7 @@ EB_Error_Code eb_set_binary_color_graphic(EB_Book *book,
     const EB_Position *position);
 EB_Error_Code eb_set_binary_mpeg(EB_Book *book, const unsigned int *argv);
 EB_Error_Code eb_read_binary(EB_Book *book, size_t binary_max_length,
-    char *binary, ssize_t *binary_length);
+    char *binary, size_t *binary_length);
 void eb_unset_binary(EB_Book *book);
 
 /* filename.c */

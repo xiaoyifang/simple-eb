@@ -182,9 +182,9 @@ static int zio_open_ebzip(Zio *zio, const char *file_name);
 static int zio_open_epwing(Zio *zio, const char *file_name);
 static int zio_open_epwing6(Zio *zio, const char *file_name);
 static int zio_make_epwing_huffman_tree(Zio *zio, int leaf_count);
-static ssize_t zio_read_ebzip(Zio *zio, char *buffer, size_t length);
-static ssize_t zio_read_epwing(Zio *zio, char *buffer, size_t length);
-static ssize_t zio_read_sebxa(Zio *zio, char *buffer, size_t length);
+static size_t zio_read_ebzip(Zio *zio, char *buffer, size_t length);
+static size_t zio_read_epwing(Zio *zio, char *buffer, size_t length);
+static size_t zio_read_sebxa(Zio *zio, char *buffer, size_t length);
 static int zio_unzip_slice_ebzip1(Zio *zio, char *out_buffer,
     size_t zipped_slice_size);
 static int zio_unzip_slice_epwing(Zio *zio, char *out_buffer);
@@ -193,7 +193,7 @@ static int zio_unzip_slice_sebxa(Zio *zio, char *out_buffer);
 static int zio_open_raw(Zio *zio, const char *file_name);
 static void zio_close_raw(Zio *zio);
 static off_t zio_lseek_raw(Zio *zio, off_t offset, int whence);
-static ssize_t zio_read_raw(Zio *zio, void *buffer, size_t length);
+static size_t zio_read_raw(Zio *zio, void *buffer, size_t length);
 
 
 /*
@@ -534,7 +534,7 @@ zio_open_epwing(Zio *zio, const char *file_name)
     int leaf_count;
     char buffer[ZIO_EPWING_BUFFER_SIZE];
     char *buffer_p;
-    ssize_t read_length;
+    size_t read_length;
     Zio_Huffman_Node *tail_node_p;
     int i;
 
@@ -694,7 +694,7 @@ zio_open_epwing6(Zio *zio, const char *file_name)
     int leaf_count;
     char buffer[ZIO_EPWING_BUFFER_SIZE];
     char *buffer_p;
-    ssize_t read_length;
+    size_t read_length;
     Zio_Huffman_Node *tail_node_p;
     int i;
 
@@ -1102,10 +1102,10 @@ zio_lseek(Zio *zio, off_t location, int whence)
 /*
  * Read data from `zio' file.
  */
-ssize_t
+size_t
 zio_read(Zio *zio, char *buffer, size_t length)
 {
-    ssize_t read_length;
+    size_t read_length;
 
     pthread_mutex_lock(&zio_mutex);
     LOG(("in: zio_read(zio=%d, length=%ld)", (int)zio->id, (long)length));
@@ -1152,11 +1152,11 @@ zio_read(Zio *zio, char *buffer, size_t length)
  * Read data from the `zio' file compressed with the ebzip compression
  * format.
  */
-static ssize_t
+static size_t
 zio_read_ebzip(Zio *zio, char *buffer, size_t length)
 {
     char temporary_buffer[8];
-    ssize_t read_length = 0;
+    size_t read_length = 0;
     size_t zipped_slice_size;
     off_t slice_location;
     off_t next_slice_location;
@@ -1264,11 +1264,11 @@ zio_read_ebzip(Zio *zio, char *buffer, size_t length)
  * Read data from the `zio' file compressed with the EPWING or EPWING V6
  * compression format.
  */
-static ssize_t
+static size_t
 zio_read_epwing(Zio *zio, char *buffer, size_t length)
 {
     char temporary_buffer[36];
-    ssize_t read_length = 0;
+    size_t read_length = 0;
     off_t page_location;
     int n;
 
@@ -1353,13 +1353,13 @@ zio_read_epwing(Zio *zio, char *buffer, size_t length)
  * Read data from the zio `file' compressed with the S-EBXA compression
  * format.
  */
-static ssize_t
+static size_t
 zio_read_sebxa(Zio *zio, char *buffer, size_t length)
 {
     char temporary_buffer[4];
-    ssize_t read_length = 0;
+    size_t read_length = 0;
     off_t slice_location;
-    ssize_t n;
+    size_t n;
     int slice_index;
 
     LOG(("in: zio_read_sebxa(zio=%d, length=%ld)", (int)zio->id,
@@ -1567,7 +1567,7 @@ zio_unzip_slice_epwing(Zio *zio, char *out_buffer)
     int bit;
     char in_buffer[ZIO_SIZE_PAGE];
     unsigned char *in_buffer_p;
-    ssize_t in_read_length;
+    size_t in_read_length;
     int in_bit_index;
     unsigned char *out_buffer_p;
     size_t out_length;
@@ -1681,7 +1681,7 @@ zio_unzip_slice_epwing6(Zio *zio, char *out_buffer)
     int bit;
     char in_buffer[ZIO_SIZE_PAGE];
     unsigned char *in_buffer_p;
-    ssize_t in_read_length;
+    size_t in_read_length;
     int in_bit_index;
     unsigned char *out_buffer_p;
     size_t out_length;
@@ -2031,11 +2031,11 @@ zio_lseek_raw(Zio *zio, off_t offset, int whence)
  * If `zio->file' is socket, it calls ebnet_read().  Otherwise it calls
  * the read() system call.
  */
-static ssize_t
+static size_t
 zio_read_raw(Zio *zio, void *buffer, size_t length)
 {
     char *buffer_p = buffer;
-    ssize_t result;
+    size_t result;
 
     LOG(("in: zio_read_raw(file=%d, length=%ld)", zio->file, (long)length));
 
@@ -2052,8 +2052,8 @@ zio_read_raw(Zio *zio, void *buffer, size_t length)
 	/*
 	 * Read from a local file.
 	 */
-	ssize_t rest_length = length;
-	ssize_t n;
+	size_t rest_length = length;
+	size_t n;
 
 	while (0 < rest_length) {
 	    errno = 0;

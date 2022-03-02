@@ -36,13 +36,13 @@
  * Unexported function.
  */
 static EB_Error_Code eb_read_binary_generic(EB_Book *book,
-    size_t binary_max_length, char *binary, ssize_t *binary_length);
+    size_t binary_max_length, char *binary, size_t *binary_length);
 static EB_Error_Code eb_read_binary_wave(EB_Book *book,
-    size_t binary_max_length, char *binary, ssize_t *binary_length);
+    size_t binary_max_length, char *binary, size_t *binary_length);
 static EB_Error_Code eb_read_binary_mono_graphic(EB_Book *book,
-    size_t binary_max_length, char *binary, ssize_t *binary_length);
+    size_t binary_max_length, char *binary, size_t *binary_length);
 static EB_Error_Code eb_read_binary_gray_graphic(EB_Book *book,
-    size_t binary_max_length, char *binary, ssize_t *binary_length);
+    size_t binary_max_length, char *binary, size_t *binary_length);
 
 
 /*
@@ -927,7 +927,7 @@ eb_read_binary(book, binary_max_length, binary, binary_length)
     EB_Book *book;
     size_t binary_max_length;
     char *binary;
-    ssize_t *binary_length;
+    size_t *binary_length;
 
 {
     EB_Error_Code error_code;
@@ -999,13 +999,13 @@ eb_read_binary(book, binary_max_length, binary, binary_length)
  */
 static EB_Error_Code
 eb_read_binary_generic(EB_Book *book, size_t binary_max_length,
-    char *binary, ssize_t *binary_length)
+    char *binary, size_t *binary_length)
 {
     EB_Error_Code error_code;
     EB_Binary_Context *context;
     char *binary_p = binary;
     size_t read_length = 0;
-    ssize_t read_result;
+    size_t read_result;
 
     LOG(("in: eb_read_binary_generic(book=%d, binary_max_length=%ld)",
 	(int)book->code, (long)binary_max_length));
@@ -1063,7 +1063,7 @@ eb_read_binary_generic(EB_Book *book, size_t binary_max_length,
  */
 static EB_Error_Code
 eb_read_binary_wave(EB_Book *book, size_t binary_max_length, char *binary,
-    ssize_t *binary_length)
+    size_t *binary_length)
 {
     EB_Error_Code error_code;
     EB_Binary_Context *context;
@@ -1130,7 +1130,7 @@ eb_read_binary_wave(EB_Book *book, size_t binary_max_length, char *binary,
  */
 static EB_Error_Code
 eb_read_binary_mono_graphic(EB_Book *book, size_t binary_max_length,
-    char *binary, ssize_t *binary_length)
+    char *binary, size_t *binary_length)
 {
     EB_Error_Code error_code;
     EB_Binary_Context *context;
@@ -1261,7 +1261,7 @@ eb_read_binary_mono_graphic(EB_Book *book, size_t binary_max_length,
  */
 static EB_Error_Code
 eb_read_binary_gray_graphic(EB_Book *book, size_t binary_max_length,
-    char *binary, ssize_t *binary_length)
+    char *binary, size_t *binary_length)
 {
     EB_Error_Code error_code;
     EB_Binary_Context *context;
