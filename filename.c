@@ -41,6 +41,9 @@
 #define strrchr	_mbsrchr
 #endif
 
+#include "dirent.h"
+
+
 
 #ifndef DOS_FILE_PATH
 

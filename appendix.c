@@ -30,9 +30,7 @@
 #include "eb.h"
 #include "error.h"
 #include "appendix.h"
-#ifdef ENABLE_EBNET
-#include "ebnet.h"
-#endif
+
 #include "build-post.h"
 
 /*
@@ -102,9 +100,7 @@ eb_initialize_appendix(EB_Appendix *appendix)
     appendix->subbook_count = 0;
     appendix->subbooks = NULL;
     appendix->subbook_current = NULL;
-#ifdef ENABLE_EBNET
-    appendix->ebnet_file = -1;
-#endif
+
     eb_initialize_lock(&appendix->lock);
     eb_initialize_alt_caches(appendix);
 
@@ -140,9 +136,7 @@ eb_finalize_appendix(EB_Appendix *appendix)
     eb_finalize_lock(&appendix->lock);
     eb_finalize_alt_caches(appendix);
 
-#ifdef ENABLE_EBNET
-    ebnet_finalize_appendix(appendix);
-#endif
+
 
     LOG(("out: eb_finalize_appendix()"));
 }
