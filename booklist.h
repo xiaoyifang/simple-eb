@@ -33,11 +33,9 @@
 extern "C" {
 #endif
 
-#ifdef EB_BUILD_LIBRARY
+
 #include "eb.h"
-#else
-#include <eb/eb.h>
-#endif
+
 
 /*
  * Function declarations.

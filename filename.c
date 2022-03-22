@@ -29,17 +29,9 @@
 #include "build-pre.h"
 #include "eb.h"
 #include "error.h"
-#ifdef ENABLE_EBNET
-#include "ebnet.h"
-#endif
+
 #include "build-post.h"
 
-#if defined(DOS_FILE_PATH) && defined(HAVE_MBSTRING_H)
-/* a path may contain double-byte chars in SJIS. */
-#include <mbstring.h>
-#define strchr	_mbschr
-#define strrchr	_mbsrchr
-#endif
 
 #include "dirent.h"
 

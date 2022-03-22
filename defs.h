@@ -36,13 +36,10 @@ extern "C" {
 #include <sys/types.h>
 #include <limits.h>
 
-#ifdef EB_BUILD_LIBRARY
+
 #include "sysdefs.h"
 #include "zio.h"
-#else
-#include <eb/sysdefs.h>
-#include <eb/zio.h>
-#endif
+
 
 #ifdef EB_ENABLE_PTHREAD
 #include <pthread.h>

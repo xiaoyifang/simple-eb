@@ -29,9 +29,6 @@
 #include "build-pre.h"
 #include "eb.h"
 #include "error.h"
-#ifdef ENABLE_EBNET
-#include "ebnet.h"
-#endif
 #include "build-post.h"
 
 /*
@@ -110,32 +107,11 @@ eb_bind_booklist(EB_BookList *booklist, const char *path)
     booklist->code = booklist_counter++;
     pthread_mutex_unlock(&booklist_counter_mutex);
 
-#ifndef ENABLE_EBNET
     error_code = EB_ERR_EBNET_UNSUPPORTED;
-    goto failed;
-#endif
-    if (!is_ebnet_url(path)) {
-	error_code = EB_ERR_BAD_FILE_NAME;
-	goto failed;
-    }
-    for (i = 0; i < booklist->entry_count; i++) {
-	free(booklist->entries[i].name);
-	free(booklist->entries[i].title);
-    }
-
-    error_code = ebnet_bind_booklist(booklist, path);
-    if (error_code != EB_SUCCESS)
-	goto failed;
-
-    LOG(("out: eb_bind_booklist(book=%d) = %s", (int)booklist->code,
-	eb_error_string(EB_SUCCESS)));
-    eb_unlock(&booklist->lock);
-    return EB_SUCCESS;
-
+   
     /*
      * An error occurs...
      */
-  failed:
     eb_finalize_booklist(booklist);
     LOG(("out: eb_bind_booklist() = %s", eb_error_string(error_code)));
     eb_unlock(&booklist->lock);

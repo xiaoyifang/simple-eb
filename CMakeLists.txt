@@ -1,8 +1,8 @@
 # set minimum cmake version
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.22)
 
 # project name and language
-project(qteb VERSION 1.0.0 LANGUAGES CXX)
+project(eb VERSION 1.0.0 LANGUAGES C)
 # add_custom_target(test)
 
 set(SOURCES
@@ -56,24 +56,27 @@ set(SOURCES
     word.c
     zio.c
     zio.h
+    eb.def
     )
 
 
-if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+if(WIN32)
     set(SOURCES
         ${SOURCES}
         dirent.h
-        dirent.cpp
         )
 endif()
 
 add_library(eb
-  STATIC
+  SHARED
   ${SOURCES}
   )
 
-
 add_definitions(-DEB_BUILD_LIBRARY)
-#target_link_libraries(eb libz)
-  # add_dependencies(test eb)
-
+if(UNIX)
+  target_link_libraries(eb libz)
+endif()
+if(WIN32)
+find_package(ZLIB REQUIRED)
+target_link_libraries(eb PRIVATE ZLIB::ZLIB)
+endif()
