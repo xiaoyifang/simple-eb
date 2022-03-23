@@ -5,7 +5,13 @@ to make it easier to build on windows.
 
 **CAN NOT WORK NOW**
 # how to build 
+
+## windows
 ```
-cmake .
+vcpkg install zlib
+```
+
+```
+cmake .  -DCMAKE=xxx (output from vcpkg)
 cmake --build .
 ```
