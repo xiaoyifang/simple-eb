@@ -1,8 +1,7 @@
 # qteb
-The files extract from libeb ,a epwing library parser.   
+These files are extracted from libeb, a epwing library parser.   
+To make build on windows easier.
 
-
-**CAN NOT WORK NOW**
 # how to build 
 
 ## windows
