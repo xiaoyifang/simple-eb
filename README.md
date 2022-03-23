@@ -6,7 +6,7 @@ To make build on windows easier.
 
 ## windows
 ```
-vcpkg install zlib
+vcpkg install zlib:x64-windows
 ```
 
 ```
