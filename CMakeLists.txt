@@ -61,22 +61,27 @@ set(SOURCES
 
 
 if(WIN32)
-    set(SOURCES
-        ${SOURCES}
-        dirent.h
-        )
+  add_definitions(-DDOS_FILE_PATH)
+  add_definitions(-DHAVE__GETDCWD)
+  set(SOURCES
+      ${SOURCES}
+      dirent.h
+      )
 endif()
 
 add_library(eb
-  SHARED
+  STATIC
   ${SOURCES}
   )
 
 add_definitions(-DEB_BUILD_LIBRARY)
+
+add_definitions(-DHAVE_DIRECT_H)
+
 if(UNIX)
   target_link_libraries(eb libz)
 endif()
 if(WIN32)
-find_package(ZLIB REQUIRED)
-target_link_libraries(eb PRIVATE ZLIB::ZLIB)
+  find_package(ZLIB REQUIRED)
+  target_link_libraries(eb PRIVATE ZLIB::ZLIB)
 endif()
