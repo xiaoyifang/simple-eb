@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.22)
 
 # project name and language
 project(eb VERSION 1.0.0 LANGUAGES C)
-# add_custom_target(test)
 
 set(SOURCES
     unistd.h
@@ -85,3 +84,12 @@ if(WIN32)
   find_package(ZLIB REQUIRED)
   target_link_libraries(eb PRIVATE ZLIB::ZLIB)
 endif()
+include(GNUInstallDirs)
+install(TARGETS eb
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+    
+INSTALL (
+    DIRECTORY ${CMAKE_SOURCE_DIR}/
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.h*")    
