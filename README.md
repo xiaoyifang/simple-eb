@@ -10,6 +10,6 @@ vcpkg install zlib:x64-windows
 ```
 
 ```
-cmake .  -DCMAKE=xxx (output from vcpkg)
+cmake .  -DCMAKE=xxx (output from the previous `vcpkg` command)
 cmake --build .
 ```
