@@ -33,8 +33,11 @@
 #include "build-post.h"
 
 
+#ifdef __APPLE__
+#include <dirent.h>
+#else
 #include "dirent.h"
-
+#endif
 
 
 #ifndef DOS_FILE_PATH

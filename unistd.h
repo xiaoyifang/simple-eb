@@ -4,6 +4,11 @@ unistd.h maps (roughly) to io.h
 */
 #ifndef _UNISTD_H
 #define _UNISTD_H
+
+#ifdef __APPLE__
+#include <unistd.h>
+#elifdef
 #include <io.h>
 #include <process.h>
+#endif
 #endif /* _UNISTD_H */
