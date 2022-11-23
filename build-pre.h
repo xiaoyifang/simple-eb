@@ -44,7 +44,7 @@
 #include "unistd.h"
 #include <fcntl.h>
 
-#ifndef __APPLE__
+#if !defined( __APPLE__) && !defined(__linux__)
   #ifdef HAVE_DIRECT_H
   #include <direct.h>
   #endif

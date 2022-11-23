@@ -5,9 +5,9 @@ unistd.h maps (roughly) to io.h
 #ifndef _UNISTD_H
 #define _UNISTD_H
 
-#ifdef __APPLE__
+#if defined( __APPLE__) || defined(__linux__)
 #include <unistd.h>
-#elifdef
+#else
 #include <io.h>
 #include <process.h>
 #endif

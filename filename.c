@@ -33,7 +33,7 @@
 #include "build-post.h"
 
 
-#ifdef __APPLE__
+#if defined( __APPLE__) || defined(__linux__)
 #include <dirent.h>
 #else
 #include "dirent.h"
