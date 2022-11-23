@@ -78,8 +78,10 @@ add_definitions(-DEB_BUILD_LIBRARY)
 add_definitions(-DHAVE_DIRECT_H)
 
 if(UNIX)
-  target_link_libraries(eb libz)
+    find_package(ZLIB REQUIRED)
+    target_link_libraries(eb ZLIB::ZLIB)
 endif()
+
 if(WIN32)
   find_package(ZLIB REQUIRED)
   target_link_libraries(eb PRIVATE ZLIB::ZLIB)

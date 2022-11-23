@@ -1,5 +1,5 @@
-/*                                                            -*- C -*-
- * Copyright (c) 2001-2006  Motoyuki Kasahara
+/*
+ * Copyright (c) 1997-2006  Motoyuki Kasahara
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,48 +26,45 @@
  * SUCH DAMAGE.
  */
 
-#ifndef EB_BINARY_H
-#define EB_BINARY_H
+#ifndef LINEBUF_H
+#define LINEBUF_H
 
-#ifdef __cplusplus
-extern "C" {
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
 
 #include <sys/types.h>
 
-#ifdef EB_BUILD_LIBRARY
-#include "defs.h"
-#else
-#include <eb/defs.h>
-#endif
+/*
+ * Buffer size of `Line_Buffer' struct.
+ */
+#define LINEBUF_BUFFER_SIZE	256
+
+/*
+ * Line buffer manager.
+ */
+typedef struct {
+    int file;				/* file descriptor */
+    int timeout;			/* idle timeout interval */
+    size_t cache_length;		/* length of cache data */
+    char buffer[LINEBUF_BUFFER_SIZE];	/* buffer */
+} Line_Buffer;
+ 
 
 /*
  * Function declarations.
  */
-/* binary.c */
-EB_Error_Code eb_set_binary_mono_graphic(EB_Book *book,
-    const EB_Position *position, int width, int height);
-EB_Error_Code eb_set_binary_gray_graphic(EB_Book *book,
-    const EB_Position *position, int width, int height);
-EB_Error_Code eb_set_binary_wave(EB_Book *book,
-    const EB_Position *start_position, const EB_Position *end_position);
-EB_Error_Code eb_set_binary_color_graphic(EB_Book *book,
-    const EB_Position *position);
-EB_Error_Code eb_set_binary_mpeg(EB_Book *book, const unsigned int *argv);
-EB_Error_Code eb_read_binary(EB_Book *book, size_t binary_max_length,
-    char *binary, ssize_t *binary_length);
-void eb_unset_binary(EB_Book *book);
+void initialize_line_buffer(Line_Buffer *line_buffer);
+void finalize_line_buffer(Line_Buffer *line_buffer);
+void set_line_buffer_timeout(Line_Buffer *line_buffer, int timeout);
+void bind_file_to_line_buffer(Line_Buffer *line_buffer, int file);
+int file_bound_to_line_buffer(Line_Buffer *line_buffer);
+void discard_cache_in_line_buffer(Line_Buffer *line_buffer);
+size_t cache_length_in_line_buffer(Line_Buffer *line_buffer);
+ssize_t read_line_buffer(Line_Buffer *line_buffer, char *line,
+    size_t max_line_length);
+ssize_t binary_read_line_buffer(Line_Buffer *line_buffer, char *stream,
+    size_t stream_length);
+int skip_line_buffer(Line_Buffer *line_buffer);
 
-/* filename.c */
-EB_Error_Code eb_compose_movie_file_name(const unsigned int *argv,
-    char *composed_file_name);
-EB_Error_Code eb_compose_movie_path_name(EB_Book *book,
-    const unsigned int *argv, char *composed_path_name);
-EB_Error_Code eb_decompose_movie_file_name(unsigned int *argv,
-    const char *composed_file_name);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* not EB_BINARY_H */
+#endif /* not LINEBUF_H */
