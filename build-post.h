@@ -32,8 +32,12 @@
 extern "C" {
 #endif
 #include "defs.h"
-#include "dirent.h"
 
+#ifdef __APPLE__
+  #include <dirent.h>
+#else
+  #include "dirent.h"
+#endif
 /*
  * Text domain name.
  */

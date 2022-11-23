@@ -44,8 +44,10 @@
 #include "unistd.h"
 #include <fcntl.h>
 
-#ifdef HAVE_DIRECT_H
-#include <direct.h>
+#ifndef __APPLE__
+  #ifdef HAVE_DIRECT_H
+  #include <direct.h>
+  #endif
 #endif
 
 #ifdef HAVE__GETDCWD
