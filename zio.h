@@ -35,6 +35,7 @@ extern "C" {
 
 #include <sys/types.h>
 #include <time.h>
+#include "win_msvc.h"
 
 /*
  * Header size of the ebzip compression file.

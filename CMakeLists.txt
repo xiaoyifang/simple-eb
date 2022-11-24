@@ -83,8 +83,10 @@ if(UNIX)
 endif()
 
 if(WIN32)
+  set(ZLIB_ROOT winlibs)
   find_package(ZLIB REQUIRED)
   target_link_libraries(eb PRIVATE ZLIB::ZLIB)
+  target_link_options(${PROJECT_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FS>)
 endif()
 include(GNUInstallDirs)
 install(TARGETS eb
