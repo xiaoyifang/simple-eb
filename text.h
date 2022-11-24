@@ -32,7 +32,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#include "win_msvc.h"
 #include <sys/types.h>
 
 #ifdef EB_BUILD_LIBRARY

@@ -30,9 +30,7 @@
 #include "eb.h"
 #include "error.h"
 #include "font.h"
-#ifdef ENABLE_EBNET
-#include "ebnet.h"
-#endif
+
 #include "build-post.h"
 
 /*
