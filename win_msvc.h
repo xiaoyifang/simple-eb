@@ -2,8 +2,12 @@
 #define WIN_MSVC_H
 
 #if defined(_MSC_VER)
-#include <BaseTsd.h>
-typedef SSIZE_T ssize_t;
+
+#ifndef _SSIZE_T
+#define _SSIZE_T
+#define ssize_t long
+#endif
+
 #endif
 
 #endif /* WIN_MSVC_H */
