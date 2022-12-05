@@ -92,8 +92,17 @@ include(GNUInstallDirs)
 install(TARGETS eb
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
-    
-INSTALL (
-    DIRECTORY ${CMAKE_SOURCE_DIR}/
-    DESTINATION include
-    FILES_MATCHING PATTERN "*.h*")    
+ 
+    if(WIN32)
+    INSTALL (
+        DIRECTORY ${CMAKE_SOURCE_DIR}/
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.h*" )    
+    else(WIN32)
+    INSTALL (
+      DIRECTORY ${CMAKE_SOURCE_DIR}/
+      DESTINATION include
+      FILES_MATCHING PATTERN "*.h*"
+      PATTERN "dirent.h" EXCLUDE
+      )  
+    endif(WIN32)
