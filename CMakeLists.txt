@@ -97,12 +97,17 @@ install(TARGETS eb
     INSTALL (
         DIRECTORY ${CMAKE_SOURCE_DIR}/
         DESTINATION include
-        FILES_MATCHING PATTERN "*.h*" )    
+        FILES_MATCHING PATTERN "*.h*" 
+        PATTERN "CMakeFiles" EXCLUDE)    
     else()
     INSTALL (
       DIRECTORY ${CMAKE_SOURCE_DIR}/
       DESTINATION include
       FILES_MATCHING PATTERN "*.h*"
       PATTERN "dirent.h" EXCLUDE
+      PATTERN "win*.h" EXCLUDE
+      PATTERN ".git*" EXCLUDE
+      PATTERN "winlibs" EXCLUDE
+      PATTERN "CMakeFiles" EXCLUDE
       )  
     endif()
