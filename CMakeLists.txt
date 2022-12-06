@@ -98,11 +98,11 @@ install(TARGETS eb
         DIRECTORY ${CMAKE_SOURCE_DIR}/
         DESTINATION include
         FILES_MATCHING PATTERN "*.h*" )    
-    else(WIN32)
+    else()
     INSTALL (
       DIRECTORY ${CMAKE_SOURCE_DIR}/
       DESTINATION include
       FILES_MATCHING PATTERN "*.h*"
       PATTERN "dirent.h" EXCLUDE
       )  
-    endif(WIN32)
+    endif()
