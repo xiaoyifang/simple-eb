@@ -64,7 +64,7 @@ if(WIN32)
   add_definitions(-DHAVE__GETDCWD)
   set(SOURCES
       ${SOURCES}
-      dirent.h
+      win_dirent.h
       )
 endif()
 
@@ -104,7 +104,7 @@ install(TARGETS eb
       DIRECTORY ${CMAKE_SOURCE_DIR}/
       DESTINATION include
       FILES_MATCHING PATTERN "*.h*"
-      PATTERN "dirent.h" EXCLUDE
+      PATTERN "win_dirent.h" EXCLUDE
       PATTERN "win*.h" EXCLUDE
       PATTERN ".git*" EXCLUDE
       PATTERN "winlibs" EXCLUDE
