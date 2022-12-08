@@ -41,7 +41,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <limits.h>
-#include "unistd.h"
+#include "custom_unistd.h"
 #include <fcntl.h>
 
 #if !defined( __APPLE__) && !defined(__linux__)

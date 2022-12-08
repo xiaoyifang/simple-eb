@@ -688,27 +688,3 @@ url_parts_print(URL_Parts *parts)
     fflush(stdout);
 }
 
-/*
- * Main for test.
- */
-#ifdef TEST
-
-int
-main(int argc, char *argv[])
-{
-    URL_Parts url;
-    int i;
-
-    if (argc < 2) {
-	fprintf(stderr, "usage: %s URL\n", argv[0]);
-	exit(1);
-    }
-
-    url_parts_initialize(&url);
-    url_parts_parse(&url, argv[1]);
-    url_parts_print(&url);
-    fflush(stdout);
-    url_parts_finalize(&url);
-}
-
-#endif

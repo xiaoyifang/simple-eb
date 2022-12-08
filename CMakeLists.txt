@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.22)
 project(eb VERSION 1.0.0 LANGUAGES C)
 
 set(SOURCES
-    unistd.h
+    custom_unistd.h
     appendix.c
     appendix.h
     appsub.c
