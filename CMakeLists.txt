@@ -69,7 +69,7 @@ if(WIN32)
 endif()
 
 add_library(eb
-  STATIC
+  SHARED
   ${SOURCES}
   )
 
