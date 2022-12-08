@@ -2,8 +2,8 @@
 
 unistd.h maps (roughly) to io.h
 */
-#ifndef _UNISTD_H
-#define _UNISTD_H
+#ifndef CUSTOM_UNISTD_H
+#define CUSTOM_UNISTD_H
 
 #if defined( __APPLE__) || defined(__linux__)
 #include <unistd.h>
