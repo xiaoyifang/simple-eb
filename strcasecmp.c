@@ -30,9 +30,7 @@
  * This program requires the following Autoconf macros:
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#else
+
 
 /* Define to empty if the keyword `const' does not work.  */
 /* #define const */
@@ -40,7 +38,7 @@
 /* Define if `size_t' is not defined.  */
 /* #define size_t unsigned */
 
-#endif /* not HAVE_CONFIG_H */
+
 
 #include <sys/types.h>
 
