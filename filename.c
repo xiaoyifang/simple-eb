@@ -40,7 +40,7 @@
 #endif
 
 
-#ifndef DOS_FILE_PATH
+#ifndef _WIN32
 
 /*
  * Canonicalize `path_name' (UNIX version).
@@ -289,7 +289,7 @@ eb_fix_path_name_suffix(char *path_name, const char *suffix)
     char *dot;
     char *semicolon;
 
-#ifndef DOS_FILE_PATH
+#ifndef _WIN32
     base_name = strrchr(path_name, '/');
 #else
     if (is_ebnet_url(path_name))
@@ -531,7 +531,7 @@ void
 eb_compose_path_name2(const char *path_name, const char *sub_directory_name,
     const char *file_name, char *composed_path_name)
 {
-#ifndef DOS_FILE_PATH
+#ifndef _WIN32
     if (strcmp(path_name, "/") == 0) {
 	sprintf(composed_path_name, "%s%s/%s",
 	    path_name, sub_directory_name, file_name);
@@ -758,7 +758,7 @@ eb_path_name_zio_code(const char *path_name, Zio_Code default_zio_code,
     const char *base_name;
     const char *dot;
 
-#ifndef DOS_FILE_PATH
+#ifndef _WIN32
     base_name = strrchr(path_name, '/');
 #else
     if (is_ebnet_url(path_name))

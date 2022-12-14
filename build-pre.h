@@ -44,13 +44,11 @@
 #include "custom_unistd.h"
 #include <fcntl.h>
 
-#if !defined( __APPLE__) && !defined(__linux__)
-  #ifdef HAVE_DIRECT_H
+#if defined( _WIN32 )
   #include <direct.h>
-  #endif
 #endif
 
-#ifdef HAVE__GETDCWD
+#if defined( _WIN32 )
 #define getcwd _getcwd
 #define getdcwd _getdcwd
 #endif

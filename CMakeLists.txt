@@ -60,8 +60,6 @@ set(SOURCES
 
 
 if(WIN32)
-  add_definitions(-DDOS_FILE_PATH)
-  add_definitions(-DHAVE__GETDCWD)
   set(SOURCES
       ${SOURCES}
       win_dirent.h
@@ -73,9 +71,6 @@ add_library(eb
   ${SOURCES}
   )
 
-add_definitions(-DEB_BUILD_LIBRARY)
-
-add_definitions(-DHAVE_DIRECT_H)
 
 if(UNIX)
     find_package(ZLIB REQUIRED)
