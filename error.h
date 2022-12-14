@@ -33,11 +33,8 @@
 extern "C" {
 #endif
 
-#ifdef EB_BUILD_LIBRARY
 #include "defs.h"
-#else
-#include <eb/defs.h>
-#endif
+
 
 /*
  * Error codes.

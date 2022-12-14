@@ -29,9 +29,7 @@
 #ifndef EB_BUILD_PRE_H
 #define EB_BUILD_PRE_H
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+
 #include "win_msvc.h"
 #include <stdio.h>
 #include <errno.h>
@@ -44,13 +42,11 @@
 #include "custom_unistd.h"
 #include <fcntl.h>
 
-#if !defined( __APPLE__) && !defined(__linux__)
-  #ifdef HAVE_DIRECT_H
+#if defined( _WIN32 )
   #include <direct.h>
-  #endif
 #endif
 
-#ifdef HAVE__GETDCWD
+#if defined( _WIN32 )
 #define getcwd _getcwd
 #define getdcwd _getdcwd
 #endif

@@ -26,9 +26,7 @@
  * SUCH DAMAGE.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -79,13 +77,10 @@
 /*
  * Debug message handler.
  */
-#ifdef EB_BUILD_LIBRARY
 extern int eb_log_flag;
 extern void eb_log(const char *, ...);
 #define LOG(x) do {if (eb_log_flag) eb_log x;} while (0)
-#else
-#define LOG(x)
-#endif
+
 
 /*
  * Get an unsigned value from an octet stream buffer.

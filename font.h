@@ -35,11 +35,8 @@ extern "C" {
 
 #include <sys/types.h>
 
-#ifdef EB_BUILD_LIBRARY
 #include "defs.h"
-#else
-#include <eb/defs.h>
-#endif
+
 
 /*
  * Font types.
