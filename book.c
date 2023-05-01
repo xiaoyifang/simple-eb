@@ -73,9 +73,8 @@ eb_initialize_book(EB_Book *book)
     book->path_length = 0;
     book->subbooks = NULL;
     book->subbook_current = NULL;
-#ifdef ENABLE_EBNET
-    book->ebnet_file = -1;
-#endif
+
+
     eb_initialize_text_context(book);
     eb_initialize_binary_context(book);
     eb_initialize_search_contexts(book);
@@ -118,12 +117,12 @@ eb_bind(EB_Book *book, const char *path)
      * Check whether `path' is URL.
      */
     is_ebnet = is_ebnet_url(path);
-#ifndef ENABLE_EBNET
+
     if (is_ebnet) {
 	error_code = EB_ERR_EBNET_UNSUPPORTED;
 	goto failed;
     }
-#endif
+
 
     /*
      * Set the path of the book.
@@ -135,14 +134,9 @@ eb_bind(EB_Book *book, const char *path)
 	goto failed;
     }
     strcpy(temporary_path, path);
-#ifdef ENABLE_EBNET
-    if (is_ebnet)
-	error_code = ebnet_canonicalize_url(temporary_path);
-    else
-	error_code = eb_canonicalize_path_name(temporary_path);
-#else
+
     error_code = eb_canonicalize_path_name(temporary_path);
-#endif
+
     if (error_code != EB_SUCCESS)
 	goto failed;
 
@@ -160,16 +154,7 @@ eb_bind(EB_Book *book, const char *path)
     }
     strcpy(book->path, temporary_path);
 
-    /*
-     * Establish a connection with a ebnet server.
-     */
-#ifdef ENABLE_EBNET
-    if (is_ebnet) {
-	error_code = ebnet_bind(book, book->path);
-	if (error_code != EB_SUCCESS)
-	    goto failed;
-    }
-#endif
+
 
     /*
      * Read information from the `LANGUAGE' file.
@@ -223,9 +208,6 @@ eb_finalize_book(EB_Book *book)
     eb_finalize_binary_context(book);
     eb_finalize_lock(&book->lock);
 
-#ifdef ENABLE_EBNET
-    ebnet_finalize_book(book);
-#endif
 
     if (book->path != NULL)
 	free(book->path);

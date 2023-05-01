@@ -174,12 +174,10 @@ eb_bind_appendix(EB_Appendix *appendix, const char *path)
      * Check whether `path' is URL.
      */
     is_ebnet = is_ebnet_url(path);
-#ifndef ENABLE_EBNET
     if (is_ebnet) {
 	error_code = EB_ERR_EBNET_UNSUPPORTED;
 	goto failed;
     }
-#endif
 
     /*
      * Set path of the appendix.
@@ -191,14 +189,8 @@ eb_bind_appendix(EB_Appendix *appendix, const char *path)
 	goto failed;
     }
     strcpy(temporary_path, path);
-#ifdef ENABLE_EBNET
-    if (is_ebnet)
-	error_code = ebnet_canonicalize_url(temporary_path);
-    else
-	error_code = eb_canonicalize_path_name(temporary_path);
-#else
+
     error_code = eb_canonicalize_path_name(temporary_path);
-#endif
     if (error_code != EB_SUCCESS)
 	goto failed;
     appendix->path_length = strlen(temporary_path);
@@ -216,16 +208,6 @@ eb_bind_appendix(EB_Appendix *appendix, const char *path)
     }
     strcpy(appendix->path, temporary_path);
 
-    /*
-     * Establish a connection with a ebnet server.
-     */
-#ifdef ENABLE_EBNET
-    if (is_ebnet) {
-	error_code = ebnet_bind_appendix(appendix, appendix->path);
-	if (error_code != EB_SUCCESS)
-	    goto failed;
-    }
-#endif
 
     /*
      * Read information from the catalog file.

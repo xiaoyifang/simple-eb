@@ -389,12 +389,6 @@ struct EB_Appendix_Struct {
      */
     EB_Appendix_Subbook *subbook_current;
 
-    /*
-     * ebnet socket file. 
-     */
-#ifdef EB_ENABLE_EBNET
-    int ebnet_file;
-#endif
 
     /*
      * Lock.
