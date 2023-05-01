@@ -49,7 +49,7 @@ set(SOURCES
     sysdefs.h
     text.c
     text.h
-    utf8.c
+    eb_utf8.c
     widealt.c
     widefont.c
     word.c
