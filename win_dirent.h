@@ -35,6 +35,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <ctype.h>
+#include <locale.h>
 
 /* Indicates that d_type field is available in dirent structure */
 #define _DIRENT_HAVE_D_TYPE
@@ -642,24 +643,32 @@ static DIR *opendir(const char *dirname)
 	if (!dirp)
 		return NULL;
 
+	size_t len = strlen(dirname);
 	/* Convert directory name to wide-character string */
-	wchar_t wname[PATH_MAX + 1];
+	wchar_t* wname =
+		(wchar_t*)malloc((len + 1) * sizeof(wchar_t));
 	size_t n;
-	int error = mbstowcs_s(&n, wname, PATH_MAX + 1, dirname, PATH_MAX+1);
+	_locale_t loc = _create_locale(LC_CTYPE, ".utf-8");
+	errno_t error =
+		_mbstowcs_s_l(&n, wname, len, dirname, _TRUNCATE, loc);
+	_free_locale(loc);
 	if (error)
 		goto exit_failure;
 
 	/* Open directory stream using wide-character name */
 	dirp->wdirp = _wopendir(wname);
+
 	if (!dirp->wdirp)
 		goto exit_failure;
 
 	/* Success */
+	free(wname);
 	return dirp;
 
 	/* Failure */
 exit_failure:
 	free(dirp);
+	free(wname);
 	return NULL;
 }
 
