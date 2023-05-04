@@ -28,6 +28,9 @@
 
 #ifndef EB_BUILD_PRE_H
 #define EB_BUILD_PRE_H
+#ifdef _WIN32
+  #define DOS_FILE_PATH
+#endif
 
 
 #include "win_msvc.h"
@@ -53,10 +56,6 @@
 
 #ifdef ENABLE_PTHREAD
 #include <pthread.h>
-#endif
-
-#ifdef ENABLE_NLS
-#include <libintl.h>
 #endif
 
 /*
