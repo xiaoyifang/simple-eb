@@ -44,7 +44,7 @@
 #include <zlib.h>
 
 #include "zio.h"
-
+#include <locale.h>
 /*
  * Flags for open().
  */
@@ -1956,9 +1956,13 @@ zio_unzip_slice_sebxa(Zio *zio, char *out_buffer)
 static int
 zio_open_raw(Zio *zio, const char *file_name)
 {
-
-    zio->file = open(file_name, O_RDONLY | O_BINARY);
-
+#if defined( _WIN32 )
+    setlocale( LC_CTYPE, ".utf-8" );
+    zio->file = open( file_name, O_RDONLY | O_BINARY );
+    setlocale( LC_CTYPE, "C" );
+#else
+    zio->file = open( file_name, O_RDONLY | O_BINARY );
+#endif
     return zio->file;
 }
 
