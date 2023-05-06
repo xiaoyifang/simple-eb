@@ -51,7 +51,10 @@
 #ifndef O_BINARY
 #define O_BINARY 0
 #endif
-
+#if defined( _WIN32 )
+#include <fcntl.h>
+#include <windows.h>
+#endif
 /*
  * The maximum length of path name.
  */
@@ -1957,9 +1960,11 @@ static int
 zio_open_raw(Zio *zio, const char *file_name)
 {
 #if defined( _WIN32 )
-    setlocale( LC_CTYPE, ".utf-8" );
-    zio->file = open( file_name, O_RDONLY | O_BINARY );
-    setlocale( LC_CTYPE, "C" );
+    wchar_t wname[ 16384 ];
+
+    if ( MultiByteToWideChar( CP_UTF8, 0, file_name, -1, wname, 16384 ) == 0 )
+        return -1;
+    zio->file = _wopen( wname, _O_RDONLY | _O_BINARY );
 #else
     zio->file = open( file_name, O_RDONLY | O_BINARY );
 #endif
