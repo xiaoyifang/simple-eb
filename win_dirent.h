@@ -643,16 +643,16 @@ static DIR *opendir(const char *dirname)
 	if (!dirp)
 		return NULL;
 
-	size_t len = strlen(dirname);
+	size_t len = strlen(dirname)+1;
 	/* Convert directory name to wide-character string */
-	wchar_t* wname =
-		(wchar_t*)malloc((len + 1) * sizeof(wchar_t));
+
+        wchar_t *wname =  malloc(sizeof(wchar_t)*len);
 	size_t n;
 	_locale_t loc = _create_locale(LC_CTYPE, ".utf-8");
 	errno_t error =
 		_mbstowcs_s_l(&n, wname, len, dirname, _TRUNCATE, loc);
 	_free_locale(loc);
-	if (error)
+	if (error!=0&&error!=STRUNCATE)
 		goto exit_failure;
 
 	/* Open directory stream using wide-character name */
