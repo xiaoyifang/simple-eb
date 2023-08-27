@@ -646,7 +646,7 @@ static DIR *opendir(const char *dirname)
 	size_t len = strlen(dirname)+1;
 	/* Convert directory name to wide-character string */
 
-        wchar_t *wname =  malloc(sizeof(wchar_t)*len);
+        wchar_t *wname =  (wchar_t *)malloc(sizeof(wchar_t)*len);
 	size_t n;
 	_locale_t loc = _create_locale(LC_CTYPE, ".utf-8");
 	errno_t error =
