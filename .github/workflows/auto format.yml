@@ -31,8 +31,3 @@ jobs:
       - uses: autofix-ci/action@89762f9c25dd85f6b78cd40e521232e403357ec0    
 
 
-  
-      #   run: |
-      #     shopt -s globstar
-      #     pngquant -f --ext .png --skip-if-larger -- **/*.png
-      - uses: autofix-ci/action@89762f9c25dd85f6b78cd40e521232e403357ec0
