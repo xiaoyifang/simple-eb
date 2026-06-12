@@ -1,3 +1,4 @@
 {
-  "dependencies": ["zlib"]
+  "dependencies": ["zlib"],
+  "builtin-baseline": "b216ddff25a1f432870e6c340ce79357049ef86e"
 }
