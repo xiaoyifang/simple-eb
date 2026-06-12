@@ -72,7 +72,7 @@ add_library(eb
   )
 
 
-    find_package(ZLIB REQUIRED)
+find_package(ZLIB REQUIRED)
 target_link_libraries(eb PRIVATE ZLIB::ZLIB)
 
 if(WIN32)

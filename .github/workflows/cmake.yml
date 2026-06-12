@@ -21,7 +21,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-2019]
+        os: [ubuntu-latest, macos-latest, windows-2022]
     steps:
     - uses: actions/checkout@v3
 
@@ -30,10 +30,21 @@ jobs:
       if: runner.os == 'Linux'
       run: sudo apt-get update && sudo apt-get install -y zlib1g-dev
 
-    # macOS: install zlib via Homebrew
-    - name: Install zlib (macOS)
-      if: runner.os == 'macOS'
-      run: brew install zlib
+    # Windows: setup vcpkg and install zlib
+    - name: Setup vcpkg (Windows)
+      if: runner.os == 'Windows'
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgJsonGlob: ''
+        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+        vcpkgGitCommitId: '2024.12.16'
+        appendedCacheKey: ${{ hashFiles('**/CMakeLists.txt') }}
+
+    - name: Install zlib via vcpkg (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        & "${{ github.workspace }}/vcpkg/vcpkg" install zlib:x64-windows
 
     # Windows: setup vcpkg and install zlib
     - name: Setup vcpkg (Windows)
