@@ -30,37 +30,14 @@ jobs:
       if: runner.os == 'Linux'
       run: sudo apt-get update && sudo apt-get install -y zlib1g-dev
 
-    # Windows: setup vcpkg and install zlib
+    # Windows: setup vcpkg and install dependencies (via vcpkg.json manifest)
     - name: Setup vcpkg (Windows)
       if: runner.os == 'Windows'
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgJsonGlob: ''
         vcpkgDirectory: '${{ github.workspace }}/vcpkg'
         vcpkgGitCommitId: '2024.12.16'
-        appendedCacheKey: ${{ hashFiles('**/CMakeLists.txt') }}
-
-    - name: Install zlib via vcpkg (Windows)
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: |
-        & "${{ github.workspace }}/vcpkg/vcpkg" install zlib:x64-windows
-
-    # Windows: setup vcpkg and install zlib
-    - name: Setup vcpkg (Windows)
-      if: runner.os == 'Windows'
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgJsonGlob: ''
-        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-        vcpkgGitCommitId: '2024.12.16'
-        appendedCacheKey: ${{ hashFiles('**/CMakeLists.txt') }}
-
-    - name: Install zlib via vcpkg (Windows)
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: |
-        & "${{ github.workspace }}/vcpkg/vcpkg" install zlib:x64-windows
+        vcpkgJsonGlob: '**/vcpkg.json'
 
     # Windows: configure with vcpkg toolchain
     - name: Configure CMake (Windows)
@@ -69,7 +46,6 @@ jobs:
         cmake -B ${{github.workspace}}/build
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg/scripts/buildsystems/vcpkg.cmake
-
     # Linux / macOS: configure without vcpkg toolchain
     - name: Configure CMake (Linux / macOS)
       if: runner.os != 'Windows'
