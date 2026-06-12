@@ -36,7 +36,12 @@ jobs:
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-        vcpkgGitCommitId: '2024.12.16'
+    - name: Setup vcpkg (Windows)
+      if: runner.os == 'Windows'
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+        vcpkgJsonGlob: '**/vcpkg.json'
         vcpkgJsonGlob: '**/vcpkg.json'
 
     # Windows: configure with vcpkg toolchain
