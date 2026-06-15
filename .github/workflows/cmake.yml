@@ -23,7 +23,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-2022]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     # Linux: install zlib via apt
     - name: Install zlib (Linux)
@@ -58,4 +58,3 @@ jobs:
       # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C ${{env.BUILD_TYPE}}
-
