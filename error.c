@@ -31,6 +31,7 @@
 #include "error.h"
 #include "build-post.h"
 
+/*
  * Error code strings.
  */
 static const char * const error_strings[] = {
