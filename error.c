@@ -270,9 +270,5 @@ eb_error_message(EB_Error_Code error_code)
     else
         message = N_("unknown error");
 
-#ifdef ENABLE_NLS
-    message = dgettext(EB_TEXT_DOMAIN_NAME, message);
-#endif /* ENABLE_NLS */
-
     return message;
 }
