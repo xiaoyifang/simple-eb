@@ -32,8 +32,6 @@
   #define DOS_FILE_PATH
 #endif
 
-
-#include "win_msvc.h"
 #include <stdio.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -52,6 +50,24 @@
 #if defined( _WIN32 )
 #define getcwd _getcwd
 #define getdcwd _getdcwd
+#endif
+
+/*
+ * Provide ssize_t for platforms that lack it (e.g. MSVC on Windows).
+ * ssize_t is the signed counterpart of size_t, defined by POSIX.
+ * We use intptr_t to match the pointer-size width on both 32-bit and 64-bit.
+ */
+#ifndef HAVE_SSIZE_T
+#if defined(_MSC_VER)
+#include <stdint.h>
+#if !defined(_SSIZE_T_DEFINED) && !defined(_SSIZE_T) &&                        \
+    !defined(__ssize_t_defined)
+#define _SSIZE_T_DEFINED
+#define _SSIZE_T
+#define __ssize_t_defined
+typedef intptr_t ssize_t;
+#endif
+#endif
 #endif
 
 #ifdef ENABLE_PTHREAD
