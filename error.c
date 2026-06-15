@@ -31,12 +31,6 @@
 #include "error.h"
 #include "build-post.h"
 
-/*
- * Mutex for gettext function call.
- */
-#if defined(ENABLE_NLS) && defined(ENABLE_PTHREAD)
-pthread_mutex_t gettext_mutex = PTHREAD_MUTEX_INITIALIZER;
-#endif
 
 /*
  * Error code strings.
