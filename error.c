@@ -32,13 +32,6 @@
 #include "build-post.h"
 
 /*
- * Mutex for gettext function call.
- */
-#if defined(ENABLE_NLS) && defined(ENABLE_PTHREAD)
-pthread_mutex_t gettext_mutex = PTHREAD_MUTEX_INITIALIZER;
-#endif
-
-/*
  * Error code strings.
  */
 static const char * const error_strings[] = {
@@ -275,10 +268,6 @@ eb_error_message(EB_Error_Code error_code)
         message = error_messages[error_code];
     else
         message = N_("unknown error");
-
-#ifdef ENABLE_NLS
-    message = dgettext(EB_TEXT_DOMAIN_NAME, message);
-#endif /* ENABLE_NLS */
 
     return message;
 }

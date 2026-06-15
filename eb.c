@@ -45,9 +45,6 @@ eb_initialize_library(void)
     LOG(("aux: EB Library version %s", EB_VERSION_STRING));
 
     eb_initialize_default_hookset();
-#ifdef ENABLE_NLS
-    bindtextdomain(EB_TEXT_DOMAIN_NAME, EB_LOCALEDIR);
-#endif
 
     if (zio_initialize_library() < 0) {
 	error_code = EB_ERR_MEMORY_EXHAUSTED;

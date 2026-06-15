@@ -115,19 +115,10 @@ typedef intptr_t ssize_t;
 #define ASCII_TOLOWER(c) (('A' <= (c) && (c) <= 'Z') ? (c) + 0x20 : (c))
 
 /*
- * Tricks for gettext.
+ * Macros for gettext (always disabled; NLS not supported).
  */
-#ifdef ENABLE_NLS
-#define _(string) gettext(string)
-#ifdef gettext_noop
-#define N_(string) gettext_noop(string)
-#else
-#define N_(string) (string)
-#endif
-#else
 #define _(string) (string)
 #define N_(string) (string)
-#endif
 
 /*
  * Fake missing function names.
