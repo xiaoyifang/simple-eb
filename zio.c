@@ -2068,4 +2068,4 @@ zio_read_raw(Zio *zio, void *buffer, size_t length)
   failed:
     LOG(("out: zio_read_raw() = %ld", (long)-1));
     return -1;
-}
+  }
