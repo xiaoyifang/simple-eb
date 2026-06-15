@@ -1960,11 +1960,18 @@ static int
 zio_open_raw(Zio *zio, const char *file_name)
 {
 #if defined( _WIN32 )
-    wchar_t wname[ 16384 ];
-
-    if ( MultiByteToWideChar( CP_UTF8, 0, file_name, -1, wname, 16384 ) == 0 )
-        return -1;
-    zio->file = _wopen( wname, _O_RDONLY | _O_BINARY );
+  int wlen = MultiByteToWideChar(CP_UTF8, 0, file_name, -1, NULL, 0);
+  if (wlen == 0)
+    return -1;
+  wchar_t *wname = (wchar_t *)malloc((size_t)wlen * sizeof(wchar_t));
+  if (wname == NULL)
+    return -1;
+  if (MultiByteToWideChar(CP_UTF8, 0, file_name, -1, wname, wlen) == 0) {
+    free(wname);
+    return -1;
+  }
+  zio->file = _wopen(wname, _O_RDONLY | _O_BINARY);
+  free(wname);
 #else
     zio->file = open( file_name, O_RDONLY | O_BINARY );
 #endif
