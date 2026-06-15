@@ -31,7 +31,6 @@
 #include "error.h"
 #include "build-post.h"
 
-
 /*
  * Error code strings.
  */
