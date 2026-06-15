@@ -26,17 +26,15 @@
  * SUCH DAMAGE.
  */
 
-
-
-#include <stdio.h>
-#include <sys/types.h>
+#include "custom_unistd.h"
 #include <errno.h>
-#include <string.h>
-#include <stdlib.h>
+#include <fcntl.h>
 #include <limits.h>
 #include <stdint.h>
-#include "custom_unistd.h"
-#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
 
 #ifdef ENABLE_PTHREAD
 #include <pthread.h>
@@ -100,11 +98,12 @@ extern void eb_log(const char *, ...);
         + (*(const unsigned char *)((p) + 2) << 8) \
         + (*(const unsigned char *)((p) + 3)))
 
-#define zio_uint5(p) (((off_t) ((uint64_t)*(const unsigned char *)(p) << 32)) \
-	+ ((off_t) (*(const unsigned char *)((p) + 1)) << 24) \
-	+ (*(const unsigned char *)((p) + 2) << 16) \
-	+ (*(const unsigned char *)((p) + 3) << 8) \
-	+ (*(const unsigned char *)((p) + 4)))
+#define zio_uint5(p)                                                           \
+  (((off_t)((uint64_t)*(const unsigned char *)(p) << 32)) +                    \
+   ((off_t)(*(const unsigned char *)((p) + 1)) << 24) +                        \
+   (*(const unsigned char *)((p) + 2) << 16) +                                 \
+   (*(const unsigned char *)((p) + 3) << 8) +                                  \
+   (*(const unsigned char *)((p) + 4)))
 
 /*
  * Test whether the path is URL with the `ebnet' scheme.
@@ -166,8 +165,9 @@ static pthread_mutex_t zio_mutex = PTHREAD_MUTEX_INITIALIZER;
 /*
  * Test whether `off_t' represents a large integer.
  */
-#define off_t_is_large \
-	(((off_t) ((uint64_t)1 << 41) + (off_t) ((uint64_t)1 << 40) + 1) % 9999991 == 7852006)
+#define off_t_is_large                                                         \
+  (((off_t)((uint64_t)1 << 41) + (off_t)((uint64_t)1 << 40) + 1) % 9999991 ==  \
+   7852006)
 
 /*
  * Unexported function.
@@ -472,8 +472,8 @@ zio_open_ebzip(Zio *zio, const char *file_name)
 	zio->index_width = 2;
     else if (zio->file_size < (off_t) 1 << 24)
 	zio->index_width = 3;
-    else if (zio->file_size < (off_t) ((uint64_t)1 << 32) || !off_t_is_large)
-	zio->index_width = 4;
+    else if (zio->file_size < (off_t)((uint64_t)1 << 32) || !off_t_is_large)
+      zio->index_width = 4;
     else
 	zio->index_width = 5;
 
@@ -2069,6 +2069,3 @@ zio_read_raw(Zio *zio, void *buffer, size_t length)
     LOG(("out: zio_read_raw() = %ld", (long)-1));
     return -1;
 }
-
-
-
