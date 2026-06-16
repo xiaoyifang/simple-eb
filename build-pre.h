@@ -40,7 +40,16 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <limits.h>
-#include "custom_unistd.h"
+/*
+ * Platform abstraction for unistd.h.
+ * unistd.h maps (roughly) to io.h on Windows.
+ */
+#if defined( __APPLE__) || defined(__linux__)
+#include <unistd.h>
+#else
+#include <io.h>
+#include <process.h>
+#endif
 #include <fcntl.h>
 
 #if defined( _WIN32 )
@@ -119,3 +128,4 @@ typedef intptr_t ssize_t;
 #endif
 
 #endif /* EB_BUILD_PRE_H */
+
