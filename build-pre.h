@@ -44,11 +44,11 @@
  * Platform abstraction for unistd.h.
  * unistd.h maps (roughly) to io.h on Windows.
  */
-#if defined(__APPLE__) || defined(__linux__)
-#include <unistd.h>
-#else
+#if defined(_WIN32)
 #include <io.h>
 #include <process.h>
+#else
+#include <unistd.h>
 #endif
 #include <fcntl.h>
 

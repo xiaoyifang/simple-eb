@@ -33,7 +33,7 @@ extern "C" {
 #endif
 #include "defs.h"
 
-#if defined( __APPLE__) || defined(__linux__)
+#ifndef _WIN32
   #include <dirent.h>
 #else
   #include "win_dirent.h"
