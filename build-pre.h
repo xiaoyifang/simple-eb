@@ -44,7 +44,7 @@
  * Platform abstraction for unistd.h.
  * unistd.h maps (roughly) to io.h on Windows.
  */
-#if defined( __APPLE__) || defined(__linux__)
+#if defined(__APPLE__) || defined(__linux__)
 #include <unistd.h>
 #else
 #include <io.h>
@@ -128,4 +128,3 @@ typedef intptr_t ssize_t;
 #endif
 
 #endif /* EB_BUILD_PRE_H */
-
