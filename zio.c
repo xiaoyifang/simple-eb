@@ -26,6 +26,7 @@
  * SUCH DAMAGE.
  */
 
+#include "build-pre.h"
 #include "custom_unistd.h"
 #include <errno.h>
 #include <fcntl.h>
