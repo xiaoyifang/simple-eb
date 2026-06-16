@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+#include "build-pre.h"
 
 #ifdef ENABLE_PTHREAD
 #include <pthread.h>
