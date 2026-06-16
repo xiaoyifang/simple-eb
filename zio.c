@@ -26,6 +26,7 @@
  * SUCH DAMAGE.
  */
 
+#include "build-pre.h"
 #include "custom_unistd.h"
 #include <errno.h>
 #include <fcntl.h>
@@ -35,7 +36,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include "build-pre.h"
 
 #ifdef ENABLE_PTHREAD
 #include <pthread.h>
