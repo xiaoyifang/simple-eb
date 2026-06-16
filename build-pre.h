@@ -40,7 +40,16 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <limits.h>
-#include "custom_unistd.h"
+/*
+ * Platform abstraction for unistd.h.
+ * unistd.h maps (roughly) to io.h on Windows.
+ */
+#if defined(_WIN32)
+#include <io.h>
+#include <process.h>
+#else
+#include <unistd.h>
+#endif
 #include <fcntl.h>
 
 #if defined( _WIN32 )

@@ -32,11 +32,10 @@
 
 #include "build-post.h"
 
-
-#if defined( __APPLE__) || defined(__linux__)
-#include <dirent.h>
-#else
+#ifdef _WIN32
 #include "win_dirent.h"
+#else
+#include <dirent.h>
 #endif
 
 
