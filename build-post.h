@@ -34,7 +34,7 @@ extern "C" {
 #include "defs.h"
 
 #ifndef _WIN32
-  #include <dirent.h>
+#include <dirent.h>
 #else
   #include "win_dirent.h"
 #endif

@@ -32,7 +32,6 @@
 
 #include "build-post.h"
 
-
 #ifdef _WIN32
 #include "win_dirent.h"
 #else
