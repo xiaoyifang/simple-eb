@@ -66,14 +66,14 @@ add_library(eb
 
 find_package(ZLIB REQUIRED)
 if(WIN32)
-  # <dirent.h> on Windows is provided by the vcpkg dirent port
-  # (tronkko/dirent). On POSIX systems it is a libc header and needs no
-  # find_package / link.
-  find_package(dirent CONFIG REQUIRED)
-  target_link_libraries(eb PRIVATE ZLIB::ZLIB dirent::dirent)
-else()
-  target_link_libraries(eb PRIVATE ZLIB::ZLIB)
+  # <dirent.h> on Windows comes from the vcpkg dirent port (header-only,
+  # tronkko/dirent). The port ships no cmake config file, so locate the
+  # header with find_path instead of find_package. On POSIX <dirent.h> is
+  # a libc header found via the compiler's default search path.
+  find_path(DIRENT_INCLUDE_DIR "dirent.h")
+  target_include_directories(eb PRIVATE ${DIRENT_INCLUDE_DIR})
 endif()
+target_link_libraries(eb PRIVATE ZLIB::ZLIB)
 
 if(WIN32)
   target_link_options(${PROJECT_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FS>)
