@@ -58,13 +58,6 @@ set(SOURCES
     )
 
 
-if(WIN32)
-  set(SOURCES
-      ${SOURCES}
-      win_dirent.h
-      )
-endif()
-
 add_library(eb
   SHARED
   ${SOURCES}
@@ -72,6 +65,14 @@ add_library(eb
 
 
 find_package(ZLIB REQUIRED)
+if(WIN32)
+  # <dirent.h> on Windows comes from the vcpkg dirent port (header-only,
+  # tronkko/dirent). The port ships no cmake config file, so locate the
+  # header with find_path instead of find_package. On POSIX <dirent.h> is
+  # a libc header found via the compiler's default search path.
+  find_path(DIRENT_INCLUDE_DIR "dirent.h")
+  target_include_directories(eb PRIVATE ${DIRENT_INCLUDE_DIR})
+endif()
 target_link_libraries(eb PRIVATE ZLIB::ZLIB)
 
 if(WIN32)
@@ -94,8 +95,6 @@ install(TARGETS eb
       DIRECTORY ${CMAKE_SOURCE_DIR}/
       DESTINATION include
       FILES_MATCHING PATTERN "*.h*"
-      PATTERN "win_dirent.h" EXCLUDE
-      PATTERN "win*.h" EXCLUDE
       PATTERN ".git*" EXCLUDE
       PATTERN "winlibs" EXCLUDE
       PATTERN "CMakeFiles" EXCLUDE

@@ -33,11 +33,11 @@ extern "C" {
 #endif
 #include "defs.h"
 
-#ifndef _WIN32
+/*
+ * <dirent.h> is provided by the system on POSIX, and by the dirent
+ * package (vcpkg, based on tronkko/dirent) on Windows.
+ */
 #include <dirent.h>
-#else
-  #include "win_dirent.h"
-#endif
 /*
  * Text domain name.
  */
