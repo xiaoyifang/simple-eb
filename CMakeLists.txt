@@ -59,13 +59,6 @@ set(SOURCES
     )
 
 
-if(WIN32)
-  set(SOURCES
-      ${SOURCES}
-      win_dirent.h
-      )
-endif()
-
 add_library(eb
   SHARED
   ${SOURCES}
@@ -73,7 +66,8 @@ add_library(eb
 
 
 find_package(ZLIB REQUIRED)
-target_link_libraries(eb PRIVATE ZLIB::ZLIB)
+find_package(dirent CONFIG REQUIRED)
+target_link_libraries(eb PRIVATE ZLIB::ZLIB dirent::dirent)
 
 if(WIN32)
   target_link_options(${PROJECT_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FS>)
@@ -95,8 +89,6 @@ install(TARGETS eb
       DIRECTORY ${CMAKE_SOURCE_DIR}/
       DESTINATION include
       FILES_MATCHING PATTERN "*.h*"
-      PATTERN "win_dirent.h" EXCLUDE
-      PATTERN "win*.h" EXCLUDE
       PATTERN ".git*" EXCLUDE
       PATTERN "winlibs" EXCLUDE
       PATTERN "CMakeFiles" EXCLUDE

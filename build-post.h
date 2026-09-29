@@ -33,11 +33,11 @@ extern "C" {
 #endif
 #include "defs.h"
 
-#if defined( __APPLE__) || defined(__linux__)
-  #include <dirent.h>
-#else
-  #include "win_dirent.h"
-#endif
+/*
+ * <dirent.h> is provided by the system on POSIX, and by the dirent
+ * package (vcpkg, based on tronkko/dirent) on Windows.
+ */
+#include <dirent.h>
 /*
  * Text domain name.
  */
