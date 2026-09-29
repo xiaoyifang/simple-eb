@@ -65,8 +65,15 @@ add_library(eb
 
 
 find_package(ZLIB REQUIRED)
-find_package(dirent CONFIG REQUIRED)
-target_link_libraries(eb PRIVATE ZLIB::ZLIB dirent::dirent)
+if(WIN32)
+  # <dirent.h> on Windows is provided by the vcpkg dirent port
+  # (tronkko/dirent). On POSIX systems it is a libc header and needs no
+  # find_package / link.
+  find_package(dirent CONFIG REQUIRED)
+  target_link_libraries(eb PRIVATE ZLIB::ZLIB dirent::dirent)
+else()
+  target_link_libraries(eb PRIVATE ZLIB::ZLIB)
+endif()
 
 if(WIN32)
   target_link_options(${PROJECT_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FS>)
