@@ -194,6 +194,7 @@ extern "C" {
  */
 /* log.c */
 extern int eb_log_flag;
+void eb_log(const char *format, ...);
 
 /* hook.c */
 extern EB_Hookset eb_default_hookset;
