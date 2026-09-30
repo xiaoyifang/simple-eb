@@ -26,12 +26,12 @@
  * SUCH DAMAGE.
  */
 
-#include "build-pre.h"
-#include "eb.h"
-#include "error.h"
 #include "binary.h"
+#include "eb.h"
+#include "eb_internal.h"
+#include "eb_platform.h"
+#include "error.h"
 #include "font.h"
-#include "build-post.h"
 
 /*
  * Unexported functions.

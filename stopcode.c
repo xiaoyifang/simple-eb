@@ -26,12 +26,12 @@
  * SUCH DAMAGE.
  */
 
-#include "build-pre.h"
-#include "eb.h"
-#include "error.h"
 #include "appendix.h"
+#include "eb.h"
+#include "eb_internal.h"
+#include "eb_platform.h"
+#include "error.h"
 #include "text.h"
-#include "build-post.h"
 
 /*
  * Examine whether the current subbook in `appendix' has a stop-code.

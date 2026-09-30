@@ -26,9 +26,9 @@
  * SUCH DAMAGE.
  */
 
-#include "build-pre.h"
 #include "defs.h"
-#include "build-post.h"
+#include "eb_internal.h"
+#include "eb_platform.h"
 
 /*
  * Examine whether built library supports Pthread.

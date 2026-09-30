@@ -15,8 +15,8 @@ set(SOURCES
     book.c
     booklist.c
     booklist.h
-    build-post.h
-    build-pre.h
+    eb_internal.h
+    eb_platform.h
     copyright.c
     cross.c
     defs.h
