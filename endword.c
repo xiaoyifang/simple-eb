@@ -26,10 +26,10 @@
  * SUCH DAMAGE.
  */
 
-#include "build-pre.h"
+#include "eb_platform.h"
 #include "eb.h"
 #include "error.h"
-#include "build-post.h"
+#include "eb_internal.h"
 
 /*
  * Examine whether the current subbook in `book' supports `ENDWORD SEARCH'

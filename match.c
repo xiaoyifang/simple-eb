@@ -26,9 +26,9 @@
  * SUCH DAMAGE.
  */
 
-#include "build-pre.h"
+#include "eb_platform.h"
 #include "eb.h"
-#include "build-post.h"
+#include "eb_internal.h"
 
 /*
  * Compare `word' and `pattern'.

@@ -26,8 +26,8 @@
  * SUCH DAMAGE.
  */
 
-#ifndef EB_BUILD_POST_H
-#define EB_BUILD_POST_H
+#ifndef EB_INTERNAL_H
+#define EB_INTERNAL_H
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -38,19 +38,6 @@ extern "C" {
  * package (vcpkg, based on tronkko/dirent) on Windows.
  */
 #include <dirent.h>
-/*
- * Text domain name.
- */
-#define EB_TEXT_DOMAIN_NAME	"eb"
-
-/*
- * Locale directory.
- */
-#ifndef WIN32
-#define EB_LOCALEDIR		"/mingw32/share/locale"
-#else
-#define EB_LOCALEDIR		localedir()
-#endif
 
 /*
  * Data size of a book entry in a catalog file.
@@ -198,12 +185,6 @@ extern "C" {
 	 && ((p)[3] == 'E' || (p)[3] == 'e') \
 	 && ((p)[4] == 'T' || (p)[4] == 't') \
 	 && (p)[5] == ':' && (p)[6] == '/' && (p)[7] == '/')
-
-/*
- * Test whether `off_t' represents a large integer.
- */
-#define off_t_is_large \
-	((((off_t) 1 << 41) + ((off_t) 1 << 40) + 1) % 9999991 == 7852006)
 
 /*
  * External variable declarations.
@@ -373,4 +354,4 @@ extern EB_Hookset eb_default_hookset;
 #ifdef __cplusplus
 }
 #endif
-#endif /* not EB_BUILD_POST_H */
+#endif /* not EB_INTERNAL_H */

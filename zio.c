@@ -26,34 +26,17 @@
  * SUCH DAMAGE.
  */
 
-#include "build-pre.h"
-#include <errno.h>
-#include <fcntl.h>
-#include <limits.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-
-#ifdef ENABLE_PTHREAD
-#include <pthread.h>
-#endif
-
+#include "eb_platform.h"
 #include <zlib.h>
-
-#include "zio.h"
 #include <locale.h>
-/*
- * Flags for open().
- */
-#ifndef O_BINARY
-#define O_BINARY 0
-#endif
-#if defined( _WIN32 )
-#include <fcntl.h>
+
+#ifdef _WIN32
 #include <windows.h>
 #endif
+
+#include "zio.h"
+#include "eb_internal.h"
+
 /*
  * The maximum length of path name.
  */
@@ -64,22 +47,6 @@
 #define PATH_MAX        1024
 #endif /* not MAXPATHLEN */
 #endif /* not PATH_MAX */
-
-/*
- * Mutual exclusion lock of Pthreads.
- */
-#ifndef ENABLE_PTHREAD
-#define pthread_mutex_lock(m)
-#define pthread_mutex_unlock(m)
-#endif
-
-/*
- * Debug message handler.
- */
-extern int eb_log_flag;
-extern void eb_log(const char *, ...);
-#define LOG(x) do {if (eb_log_flag) eb_log x;} while (0)
-
 
 /*
  * Get an unsigned value from an octet stream buffer.
@@ -104,17 +71,6 @@ extern void eb_log(const char *, ...);
    (*(const unsigned char *)((p) + 2) << 16) +                                 \
    (*(const unsigned char *)((p) + 3) << 8) +                                  \
    (*(const unsigned char *)((p) + 4)))
-
-/*
- * Test whether the path is URL with the `ebnet' scheme.
- */
-#define is_ebnet_url(p) \
-	(   ((p)[0] == 'E' || (p)[0] == 'e') \
-	 && ((p)[1] == 'B' || (p)[1] == 'b') \
-	 && ((p)[2] == 'N' || (p)[2] == 'n') \
-	 && ((p)[3] == 'E' || (p)[3] == 'e') \
-	 && ((p)[4] == 'T' || (p)[4] == 't') \
-	 && (p)[5] == ':' && (p)[6] == '/' && (p)[7] == '/')
 
 /*
  * Size of a page (The term `page' means `block' in JIS X 4081).
@@ -161,13 +117,6 @@ static int zio_counter = 0;
 #ifdef ENABLE_PTHREAD
 static pthread_mutex_t zio_mutex = PTHREAD_MUTEX_INITIALIZER;
 #endif
-
-/*
- * Test whether `off_t' represents a large integer.
- */
-#define off_t_is_large                                                         \
-  (((off_t)((uint64_t)1 << 41) + (off_t)((uint64_t)1 << 40) + 1) % 9999991 ==  \
-   7852006)
 
 /*
  * Unexported function.

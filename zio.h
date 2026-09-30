@@ -33,7 +33,7 @@
 extern "C" {
 #endif
 
-#include "build-pre.h"
+#include "eb_platform.h"
 #include <sys/types.h>
 #include <time.h>
 

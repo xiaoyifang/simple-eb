@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-#include "build-pre.h"
+#include "eb_platform.h"
 
 /*
  * Convert a string from JIS X 0208 to EUC JP.

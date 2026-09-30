@@ -26,11 +26,11 @@
  * SUCH DAMAGE.
  */
 
-#include "build-pre.h"
+#include "eb_platform.h"
 #include "eb.h"
 #include "error.h"
 #include "text.h"
-#include "build-post.h"
+#include "eb_internal.h"
 
 /*
  * The maximum number of arguments for an escape sequence.
