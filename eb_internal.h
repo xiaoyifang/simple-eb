@@ -40,6 +40,15 @@ extern "C" {
 #include <dirent.h>
 
 /*
+ * gettext shims (NLS is not supported; pass strings through unchanged).
+ * Kept private here so the `_` macro does not leak to library consumers
+ * via zio.h -> eb_platform.h (it would otherwise collide with C++
+ * code that uses `_` as a variable name, e.g. Qt's QMutexLocker idiom).
+ */
+#define _(string) (string)
+#define N_(string) (string)
+
+/*
  * Data size of a book entry in a catalog file.
  */
 #define EB_SIZE_EB_CATALOG 40

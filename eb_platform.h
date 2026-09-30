@@ -121,10 +121,9 @@ typedef intptr_t ssize_t;
 #define ASCII_TOLOWER(c) (('A' <= (c) && (c) <= 'Z') ? (c) + 0x20 : (c))
 
 /*
- * gettext shims (NLS is not supported; pass strings through unchanged).
+ * gettext shims (NLS is not supported) live in eb_internal.h so they do not
+ * leak to library consumers via the public zio.h -> eb_platform.h chain.
  */
-#define _(string) (string)
-#define N_(string) (string)
 
 /*
  * Route strcasecmp/strncasecmp to the EB-provided fallbacks when the
