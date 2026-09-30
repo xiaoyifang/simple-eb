@@ -31,6 +31,10 @@
 #include "eb_platform.h"
 #include "error.h"
 
+#if defined(_WIN32)
+#include <locale.h>
+#endif
+
 /*
  * Initialize the library.
  */
@@ -43,6 +47,23 @@ eb_initialize_library(void)
 
     LOG(("in: eb_initialize_library()"));
     LOG(("aux: EB Library version %s", EB_VERSION_STRING));
+
+#if defined(_WIN32)
+    /*
+     * dirent's opendir() (tronkko/dirent, header-only) uses mbstowcs_s()
+     * to convert narrow paths to wchar_t. mbstowcs_s() respects the
+     * current LC_CTYPE locale, which defaults to the "C" locale on
+     * Windows (ASCII-only). As a result, opendir() fails on any path
+     * containing non-ASCII characters (e.g. CJK dictionary directories),
+     * leading to EB_ERR_FAIL_OPEN_CAT at eb_bind() time.
+     *
+     * Switch LC_CTYPE to the ".utf-8" codepage so mbstowcs_s() treats
+     * UTF-8 narrow strings correctly. This restores the behavior of the
+     * previously-vendored win_dirent.h patch that did the same conversion
+     * locally via _mbstowcs_s_l + _create_locale(".utf-8").
+     */
+    setlocale(LC_CTYPE, ".utf-8");
+#endif
 
     eb_initialize_default_hookset();
 
