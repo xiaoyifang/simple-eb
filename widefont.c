@@ -27,11 +27,11 @@
  * SUCH DAMAGE.
  */
 
-#include "eb_platform.h"
 #include "eb.h"
+#include "eb_internal.h"
+#include "eb_platform.h"
 #include "error.h"
 #include "font.h"
-#include "eb_internal.h"
 
 /*
  * Unexported functions.

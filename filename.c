@@ -26,12 +26,11 @@
  * SUCH DAMAGE.
  */
 
-#include "eb_platform.h"
 #include "eb.h"
+#include "eb_platform.h"
 #include "error.h"
 
 #include "eb_internal.h"
-
 
 #ifndef _WIN32
 

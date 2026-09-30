@@ -26,12 +26,12 @@
  * SUCH DAMAGE.
  */
 
-#include "eb_platform.h"
-#include "eb.h"
-#include "error.h"
 #include "appendix.h"
-#include "text.h"
+#include "eb.h"
 #include "eb_internal.h"
+#include "eb_platform.h"
+#include "error.h"
+#include "text.h"
 
 /*
  * Default hookset.

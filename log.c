@@ -26,9 +26,9 @@
  * SUCH DAMAGE.
  */
 
-#include "eb_platform.h"
 #include "eb.h"
 #include "eb_internal.h"
+#include "eb_platform.h"
 
 #include <stdarg.h>
 

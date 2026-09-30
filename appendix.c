@@ -26,10 +26,10 @@
  * SUCH DAMAGE.
  */
 
-#include "eb_platform.h"
-#include "eb.h"
-#include "error.h"
 #include "appendix.h"
+#include "eb.h"
+#include "eb_platform.h"
+#include "error.h"
 
 #include "eb_internal.h"
 

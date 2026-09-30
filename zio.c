@@ -27,15 +27,15 @@
  */
 
 #include "eb_platform.h"
-#include <zlib.h>
 #include <locale.h>
+#include <zlib.h>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
-#include "zio.h"
 #include "eb_internal.h"
+#include "zio.h"
 
 /*
  * The maximum length of path name.

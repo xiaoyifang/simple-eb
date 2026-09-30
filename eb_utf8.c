@@ -26,12 +26,12 @@
  * SUCH DAMAGE.
  */
 
-#include "eb_platform.h"
-#include "eb.h"
-#include "error.h"
 #include "binary.h"
-#include "font.h"
+#include "eb.h"
 #include "eb_internal.h"
+#include "eb_platform.h"
+#include "error.h"
+#include "font.h"
 
 char *eb_normalize_utf8 (EB_Book *book, int code) {
     EB_Subbook *subbook;
