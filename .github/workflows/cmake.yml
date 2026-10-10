@@ -60,15 +60,14 @@ jobs:
       run: ctest -C ${{env.BUILD_TYPE}}
 
   # Verify the pthreads-enabled configuration still compiles and links.
-  # ENABLE_PTHREAD is injected via CMAKE_C_FLAGS because CMakeLists.txt
-  # does not (yet) expose it as a CMake option.
-  # POSIX only: MSVC has no <pthread.h>; wiring the vcpkg pthreads port
-  # for Windows is out of scope.
+  # Windows uses the vcpkg pthreads port (PThreads4W); on POSIX the
+  # pthreads port is an empty meta-package and system pthreads are used
+  # via Threads::Threads.
   build-pthread:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-2022]
     steps:
     - uses: actions/checkout@v4
 
@@ -77,11 +76,26 @@ jobs:
       if: runner.os == 'Linux'
       run: sudo apt-get update && sudo apt-get install -y zlib1g-dev
 
-    - name: Configure CMake (ENABLE_PTHREAD)
+    # Windows: setup vcpkg and install dependencies (via vcpkg.json manifest)
+    - name: Setup vcpkg (Windows)
+      if: runner.os == 'Windows'
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+        vcpkgJsonGlob: '**/vcpkg.json'
+
+    # Windows: configure with vcpkg toolchain
+    - name: Configure CMake (Windows)
+      if: runner.os == 'Windows'
       run: >
         cmake -B ${{github.workspace}}/build
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-        -DCMAKE_C_FLAGS="-DENABLE_PTHREAD -pthread"
-        -DCMAKE_SHARED_LINKER_FLAGS="-pthread"
+        -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg/scripts/buildsystems/vcpkg.cmake
+        -DENABLE_PTHREAD=ON
+    # Linux / macOS: configure without vcpkg toolchain
+    - name: Configure CMake (Linux / macOS)
+      if: runner.os != 'Windows'
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DENABLE_PTHREAD=ON
     - name: Build
+      # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
