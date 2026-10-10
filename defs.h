@@ -41,7 +41,7 @@ extern "C" {
 #include "zio.h"
 
 
-#ifdef EB_ENABLE_PTHREAD
+#ifdef ENABLE_PTHREAD
 #include <pthread.h>
 #endif
 
@@ -203,7 +203,7 @@ typedef int EB_Binary_Code;
 /*
  * Typedef for Structures.
  */
-#ifdef EB_ENABLE_PTHREAD
+#ifdef ENABLE_PTHREAD
 typedef struct EB_Lock_Struct              EB_Lock;
 #endif
 typedef struct EB_Position_Struct          EB_Position;
@@ -227,7 +227,7 @@ typedef struct EB_BookList                 EB_BookList;
 /*
  * Pthreads lock.
  */
-#ifdef EB_ENABLE_PTHREAD
+#ifdef ENABLE_PTHREAD
 struct EB_Lock_Struct {
     /*
      * Lock count.  (For emulating recursive lock).
@@ -244,7 +244,7 @@ struct EB_Lock_Struct {
      */
     pthread_mutex_t entity_mutex;
 };
-#endif /* EB_ENABLE_PTHREAD */
+#endif /* ENABLE_PTHREAD */
 
 /*
  * A pair of page and offset.
@@ -393,7 +393,7 @@ struct EB_Appendix_Struct {
     /*
      * Lock.
      */
-#ifdef EB_ENABLE_PTHREAD
+#ifdef ENABLE_PTHREAD
     EB_Lock lock;
 #endif
 
@@ -940,7 +940,7 @@ struct EB_Book_Struct {
     /*
      * Lock.
      */
-#ifdef EB_ENABLE_PTHREAD
+#ifdef ENABLE_PTHREAD
     EB_Lock lock;
 #endif
 };
@@ -990,7 +990,7 @@ struct EB_Hookset_Struct {
     /*
      * Lock.
      */
-#ifdef EB_ENABLE_PTHREAD
+#ifdef ENABLE_PTHREAD
     EB_Lock lock;
 #endif
 };
@@ -1037,7 +1037,7 @@ struct EB_BookList {
     /*
      * Lock.
      */
-#ifdef EB_ENABLE_PTHREAD
+#ifdef ENABLE_PTHREAD
     EB_Lock lock;
 #endif
 };
