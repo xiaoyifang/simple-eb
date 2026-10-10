@@ -40,7 +40,6 @@ extern "C" {
 #include "sysdefs.h"
 #include "zio.h"
 
-
 #ifdef ENABLE_PTHREAD
 #include <pthread.h>
 #endif
