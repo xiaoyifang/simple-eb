@@ -58,3 +58,44 @@ jobs:
       # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C ${{env.BUILD_TYPE}}
+
+  # Verify the pthreads-enabled configuration still compiles and links.
+  # Windows uses the vcpkg pthreads port (PThreads4W); on POSIX the
+  # pthreads port is an empty meta-package and system pthreads are used
+  # via Threads::Threads.
+  build-pthread:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-2022]
+    steps:
+    - uses: actions/checkout@v4
+
+    # Linux: install zlib via apt
+    - name: Install zlib (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install -y zlib1g-dev
+
+    # Windows: setup vcpkg and install dependencies (via vcpkg.json manifest)
+    - name: Setup vcpkg (Windows)
+      if: runner.os == 'Windows'
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+        vcpkgJsonGlob: '**/vcpkg.json'
+
+    # Windows: configure with vcpkg toolchain
+    - name: Configure CMake (Windows)
+      if: runner.os == 'Windows'
+      run: >
+        cmake -B ${{github.workspace}}/build
+        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg/scripts/buildsystems/vcpkg.cmake
+        -DENABLE_PTHREAD=ON
+    # Linux / macOS: configure without vcpkg toolchain
+    - name: Configure CMake (Linux / macOS)
+      if: runner.os != 'Windows'
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DENABLE_PTHREAD=ON
+    - name: Build
+      # Build your program with the given configuration
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
